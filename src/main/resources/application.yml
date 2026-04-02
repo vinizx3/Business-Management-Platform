@@ -1,0 +1,35 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5433/pmei
+    username: pmei
+    password: pmei
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format-sql: true
+
+  jackson:
+    serialization:
+      indent_output: true
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+server:
+  port: 8080
+
+jwt:
+  secret: my-super-secret-super-long-minimum-32-bytes-key-here
+  expiration: 86400000
+
+financial:
+  threshold:
+    expense-increase: 20
+    commitment: 70
+    projection-months: 3

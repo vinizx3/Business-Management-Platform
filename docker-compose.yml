@@ -1,0 +1,38 @@
+services:
+
+  postgres:
+    image: postgres:15
+    container_name: pmei-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: pmei
+      POSTGRES_USER: pmei
+      POSTGRES_PASSWORD: pmei
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pmei -d pmei"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: .
+    container_name: pmei-app
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/pmei
+      SPRING_DATASOURCE_USERNAME: pmei
+      SPRING_DATASOURCE_PASSWORD: pmei
+      JWT_SECRET: my-super-secret-super-long-minimum-32-bytes-key-here
+      JWT_EXPIRATION: 86400000
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres-data:
