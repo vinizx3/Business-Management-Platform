@@ -6,6 +6,8 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * OpenAPI (Swagger) configuration for API documentation.
@@ -30,5 +32,16 @@ public class OpenApiConfig {
                                         .bearerFormat("JWT") // token format
                         )
                 );
+    }
+
+    @Bean
+    public WebMvcConfigurer swaggerDarkMode() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addResourceHandlers(ResourceHandlerRegistry registry) {
+                registry.addResourceHandler("/swagger-ui/custom.css")
+                        .addResourceLocations("classpath:/static/swagger-ui/");
+            }
+        };
     }
 }

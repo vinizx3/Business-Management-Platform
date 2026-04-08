@@ -1,9 +1,7 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5433/pmei
-    username: pmei
-    password: pmei
+    url: ${DATABASE_URL}
   jpa:
     hibernate:
       ddl-auto: update
@@ -27,9 +25,3 @@ server:
 jwt:
   secret: my-super-secret-super-long-minimum-32-bytes-key-here
   expiration: 86400000
-
-financial:
-  threshold:
-    expense-increase: 20
-    commitment: 70
-    projection-months: 3
