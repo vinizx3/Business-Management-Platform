@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 /**
  * Security configuration class responsible for defining authentication and authorization rules.
@@ -22,6 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  * - Endpoint access control (public and protected routes)
  * - Integration of the JWT authentication filter
  * - Password encoding strategy
+ * - CORS configuration for cross-origin requests
  */
 @Configuration
 @RequiredArgsConstructor
@@ -29,6 +31,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final CorsConfigurationSource corsConfigurationSource;
 
     /**
      * Configures the main security filter chain.
@@ -38,6 +41,7 @@ public class SecurityConfig {
      * - Sets session management to STATELESS (JWT-based authentication)
      * - Defines public and protected endpoints
      * - Adds JWT filter before Spring Security authentication filter
+     * - Enables CORS with custom configuration source
      *
      * @param http HttpSecurity configuration object
      * @return Configured SecurityFilterChain
@@ -47,6 +51,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
+                // Enable CORS using the configured CorsConfigurationSource bean
+                .cors(cors -> cors.configurationSource(corsConfigurationSource))
+
                 // Disable CSRF since we are using JWT (stateless API)
                 .csrf(csrf -> csrf.disable())
 
