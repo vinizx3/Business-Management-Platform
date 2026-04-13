@@ -5,26 +5,28 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
-        format-sql: true
+        format-sql: false
 
   jackson:
     serialization:
       indent_output: true
 
-logging:
-  level:
-    org.hibernate.SQL: DEBUG
-    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
-
 server:
   port: ${PORT:8080}
+  forward-headers-strategy: framework
 
 jwt:
-  secret: my-super-secret-super-long-minimum-32-bytes-key-here
-  expiration: 86400000
+  secret: ${JWT_SECRET:my-super-secret-super-long-minimum-32-bytes-key-here}
+  expiration: ${JWT_EXPIRATION:86400000}
+
+financial:
+  threshold:
+    expense-increase: ${FINANCIAL_THRESHOLD_EXPENSE_INCREASE:20}
+    commitment: ${FINANCIAL_THRESHOLD_COMMITMENT:70}
+    projection-months: ${FINANCIAL_THRESHOLD_PROJECTION_MONTHS:3}
 
 springdoc:
   swagger-ui:
