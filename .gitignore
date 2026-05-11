@@ -1,0 +1,41 @@
+# Logs
+*.log
+
+# Env files (SEGURANÇA)
+.env
+.env.*
+
+# Build
+target/
+*.jar
+*.war
+*.class
+
+# Maven wrapper (opcional manter, mas comum ignorar jar cache)
+.mvn/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDEs
+.idea/
+*.iml
+*.iws
+*.ipr
+.classpath
+.project
+.settings
+.springBeans
+.sts4-cache
+.apt_generated
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# VS Code
+.vscode/
